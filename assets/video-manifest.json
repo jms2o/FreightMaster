@@ -1,0 +1,95 @@
+{
+  "videos": [
+    {
+      "path": "public/media/freight-road-mobile.mp4",
+      "bytes": 3796341,
+      "sha256": "efb2427358dc0c4788be1346f23e8fa4394da7b369a91a71b403aff35cda507d",
+      "git_sha": "4e67f28943130c7871b77b9c857b9ffc38434b72",
+      "parts": [
+        {
+          "path": "assets/video-parts/freight-road-mobile/001.part",
+          "bytes": 600000,
+          "git_sha": "0a5324a79ef11971b9746d95c42370fd71dc094d"
+        },
+        {
+          "path": "assets/video-parts/freight-road-mobile/002.part",
+          "bytes": 600000,
+          "git_sha": "b30295b5a492e277b58b4825c8e03eba67285d8c"
+        },
+        {
+          "path": "assets/video-parts/freight-road-mobile/003.part",
+          "bytes": 600000,
+          "git_sha": "6affb895a224a32386836cfe1ffe24fd620739a0"
+        },
+        {
+          "path": "assets/video-parts/freight-road-mobile/004.part",
+          "bytes": 600000,
+          "git_sha": "56c4d53eadaa2f35c76db91517d75b0ed9e5d65b"
+        },
+        {
+          "path": "assets/video-parts/freight-road-mobile/005.part",
+          "bytes": 600000,
+          "git_sha": "47f67cec961c5ad3067f0b1875ac74615fc51cd9"
+        },
+        {
+          "path": "assets/video-parts/freight-road-mobile/006.part",
+          "bytes": 600000,
+          "git_sha": "33401e3458011d878e71b33a55a8579a6f9972e6"
+        },
+        {
+          "path": "assets/video-parts/freight-road-mobile/007.part",
+          "bytes": 196341,
+          "git_sha": "897b6050bc975e28fc6bf67cf37cca8e04309d4f"
+        }
+      ]
+    },
+    {
+      "path": "public/media/freight-road-wide.mp4",
+      "bytes": 4597558,
+      "sha256": "b64e5fe2211796886849980598d459a0a28ad8401c078b7f4e57fe9cb123937a",
+      "git_sha": "d2bc2cfaea55b3ad6f38648796555d6091f1e67c",
+      "parts": [
+        {
+          "path": "assets/video-parts/freight-road-wide/001.part",
+          "bytes": 600000,
+          "git_sha": "574567bb5ab6ae51af4bc77981ff19d67be90de6"
+        },
+        {
+          "path": "assets/video-parts/freight-road-wide/002.part",
+          "bytes": 600000,
+          "git_sha": "8f18030b713035ab67d13098bd9266c287e751a1"
+        },
+        {
+          "path": "assets/video-parts/freight-road-wide/003.part",
+          "bytes": 600000,
+          "git_sha": "fdf4459356db6f31e8b13d9ebab57989755b6c3e"
+        },
+        {
+          "path": "assets/video-parts/freight-road-wide/004.part",
+          "bytes": 600000,
+          "git_sha": "e94f66f0900b115dcbfdec6c2dcc3c73cb70f898"
+        },
+        {
+          "path": "assets/video-parts/freight-road-wide/005.part",
+          "bytes": 600000,
+          "git_sha": "763fb4f1acdbfb0e149410a74ab47635430ba1d4"
+        },
+        {
+          "path": "assets/video-parts/freight-road-wide/006.part",
+          "bytes": 600000,
+          "git_sha": "f2c7859c2c60b7c1bbb667773ed3dc7548a77b99"
+        },
+        {
+          "path": "assets/video-parts/freight-road-wide/007.part",
+          "bytes": 600000,
+          "git_sha": "26b2ae683e41858d829e236016b68afc861c0157"
+        },
+        {
+          "path": "assets/video-parts/freight-road-wide/008.part",
+          "bytes": 397558,
+          "git_sha": "994354fbce909c917fc5616e5c12021ef1f7a11a"
+        }
+      ]
+    }
+  ]
+}
