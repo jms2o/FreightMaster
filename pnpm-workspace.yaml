@@ -1,0 +1,4 @@
+# Explicit build policy for pnpm 11 / Hostinger.
+# The unused ESLint and Drizzle toolchains have been removed.
+allowBuilds:
+  sharp: true

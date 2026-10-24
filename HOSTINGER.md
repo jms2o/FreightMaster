@@ -8,9 +8,9 @@ En hPanel: Sitios web → Añadir sitio web → Aplicación web Node.js → cone
 
 Ajustes del proyecto:
 
-- Instalación: `npm ci` (se incluye `package-lock.json`).
-- Compilación: `npm run build`.
-- Arranque: `npm start`.
+- Instalación: `pnpm install --frozen-lockfile` (se incluye `pnpm-lock.yaml`).
+- Compilación: `pnpm run build`.
+- Arranque: `pnpm start`.
 - Raíz del proyecto: `/`.
 - El puerto lo asigna Hostinger mediante `PORT`.
 
@@ -54,7 +54,7 @@ Si la portada abre pero las escrituras devuelven 403, revisa que `APP_URL` coinc
 
 ## Archivos de video
 
-Los videos están en partes pequeñas dentro de `assets/video-parts/` para evitar el límite de transferencia. `npm run dev` y `npm run build` reconstruyen los MP4 automáticamente y comprueban SHA-256. También puedes ejecutar `npm run media:restore`. No hay descargas externas ni diferencias en la película final.
+Los videos están en partes pequeñas dentro de `assets/video-parts/` para evitar el límite de transferencia. `pnpm dev` y `pnpm run build` reconstruyen los MP4 automáticamente y comprueban SHA-256. También puedes ejecutar `pnpm media:restore`. No hay descargas externas ni diferencias en la película final.
 
 ## Límites de esta migración
 
@@ -63,3 +63,9 @@ No copia datos, sesiones ni contraseñas desde ChatGPT Sites. La aplicación pub
 La comprobación con la base real de Hostinger y el dominio provisional se realiza después de introducir los datos de tu alojamiento en hPanel. Una compilación local no certifica la conexión de producción.
 
 Referencias oficiales: https://www.hostinger.com/support/how-to-deploy-a-nodejs-website-in-hostinger/ y https://www.hostinger.com/support/connecting-a-hostinger-mysql-database-to-a-node-js-application/
+
+## Instalación en pnpm 11
+
+El repositorio fija pnpm 11.24.0 y contiene `pnpm-workspace.yaml` con una política explícita `allowBuilds`. La cadena de ESLint y Drizzle ya no forma parte de las dependencias de esta aplicación: no es necesaria para compilar Next.js ni para las consultas MySQL. Esto elimina las dependencias esbuild/unrs-resolver que bloqueaban el primer despliegue con `ERR_PNPM_IGNORED_BUILDS`. Se mantiene la autorización concreta de `sharp` para las versiones que ejecutan instalación nativa.
+
+No se necesita ejecutar una aprobación interactiva en hPanel ni habilitar scripts para todos los paquetes. Conserva pnpm y vuelve a desplegar la versión nueva de `main`; reintentar una compilación fijada al commit anterior no incorpora esta corrección. Los avisos de actualización de pnpm y paquetes obsoletos no son el error que detuvo la instalación.
