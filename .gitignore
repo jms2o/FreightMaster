@@ -28,6 +28,7 @@ yarn-error.log*
 
 # Local environment and keys
 .env*
+!.env.example
 .dev.vars*
 *.pem
 
@@ -44,6 +45,5 @@ yarn-error.log*
 # OS metadata
 .DS_Store
 
-# Videos restored from the checked-in transfer parts by dev/build
 /public/media/freight-road-mobile.mp4
 /public/media/freight-road-wide.mp4

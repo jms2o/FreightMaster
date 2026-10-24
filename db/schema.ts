@@ -1,8 +1,0 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-export const owners = sqliteTable('owners', { slot: integer('slot').primaryKey(), userId: text('user_id').notNull() });
-export const drivers = sqliteTable('drivers', { id: text('id').primaryKey(), name: text('name').notNull(), salt: text('salt').notNull(), pinHash: text('pin_hash').notNull(), active: integer('active').notNull().default(1), createdAt: text('created_at').notNull() });
-export const sessions = sqliteTable('driver_sessions', { tokenHash: text('token_hash').primaryKey(), driverId: text('driver_id').notNull(), expiresAt: integer('expires_at').notNull() });
-export const attempts = sqliteTable('login_attempts', { key: text('key').primaryKey(), count: integer('count').notNull(), until: integer('until').notNull() });
-export const quotes = sqliteTable('quotes', { id: text('id').primaryKey(), company: text('company').notNull(), contact: text('contact').notNull(), origin: text('origin').notNull(), destination: text('destination').notNull(), cargo: text('cargo').notNull(), createdAt: text('created_at').notNull() });
-export const stops = sqliteTable('itinerary_stops', { id:text('id').primaryKey(), driverId:text('driver_id').notNull(), date:text('date').notNull(), sequence:integer('sequence').notNull(), operation:text('operation').notNull(), location:text('location').notNull(), plannedTime:text('planned_time').notNull().default(''), reference:text('reference').notNull().default(''), instructions:text('instructions').notNull().default(''), requirements:text('requirements').notNull().default(''), active:integer('active').notNull().default(1) });
-export const companySettings = sqliteTable('company_settings',{key:text('key').primaryKey(),value:text('value').notNull()});
