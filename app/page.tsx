@@ -14,7 +14,7 @@ async function login(e:FormEvent<HTMLFormElement>){e.preventDefault();setBusy(tr
 async function send(text:string){if(!text.trim()||busy)return;setMessages(m=>[...m,{from:'user',text}]);setBusy(true);try{const r=await fetch(mode==='driver'?'/api/driver/chat':'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});const d=await r.json() as {error?:string;message:string};if(!r.ok)throw Error(d.error);setMessages(m=>[...m,{from:'bot',text:d.message}])}catch(e){setMessages(m=>[...m,{from:'bot',text:e instanceof Error?e.message:'No se pudo conectar. Intenta otra vez.'}])}finally{setBusy(false)}}
 async function submitQuote(e:FormEvent<HTMLFormElement>){e.preventDefault();const form=e.currentTarget;setQuote('Guardando tu solicitud…');const fields=Object.fromEntries(new FormData(form));try{const r=await fetch('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(fields)});const d=await r.json() as {error?:string;reference:string};if(!r.ok)throw Error(d.error);setQuote(`Solicitud registrada. Tu referencia es ${d.reference}. El equipo puede consultarla en su panel.`);form.reset()}catch(e){setQuote(e instanceof Error?e.message:'No se pudo guardar. Intenta otra vez.')}}
 return <PageMotion><header className="header">
-  <a className="brand" href="#inicio" aria-label="Freight Master — inicio"><img src="/logo.png" alt="Freight Master" width="1536" height="675"/></a>
+  <a className="brand" href="#inicio" aria-label="Freight Master — inicio"><img src="/freight-master-transparent-e37568de.png" alt="Freight Master" width="1536" height="675"/></a>
   <nav aria-label="Navegación principal">
     <a href="#servicios">Servicios</a>
     <a href="#experiencia">Cómo funciona</a>
