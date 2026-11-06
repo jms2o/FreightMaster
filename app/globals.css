@@ -142,10 +142,6 @@
 @media(prefers-reduced-motion:reduce){.header-cta{transition:none}}
 
 /* Driver applications and private document review. */
-.recruitment-callout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:60px;background:var(--wine);color:var(--ivory)}
-.recruitment-callout h2{margin:20px 0;font-size:clamp(40px,5vw,68px);line-height:1.05;font-weight:500}
-.recruitment-callout h2 em{color:#e6cbd6}.recruitment-callout p{font-size:15px;line-height:1.8;max-width:450px;color:#f3e6ec}
-.recruitment-callout .button{justify-self:start;gap:25px}
 .recruitment-header{display:flex;justify-content:space-between;align-items:center;padding:20px 6%;border-bottom:1px solid #ded4c9;background:var(--ivory);gap:24px}
 .recruitment-header .text-link{font-size:14px;display:flex;gap:10px;align-items:center;white-space:nowrap}
 .recruitment-page{max-width:1440px;margin:0 auto}
@@ -212,10 +208,50 @@
 .application-downloads b{display:block;font-size:13px;line-height:1.6;font-weight:500}.application-downloads small{display:block;font-size:10px;margin-top:4px;color:#7a6873}.application-downloads svg{flex-shrink:0;color:var(--wine)}
 @media(min-width:901px) and (max-width:1150px){header.header{gap:20px;padding-left:3%;padding-right:3%}.header nav{gap:17px;font-size:12px}.header-cta{font-size:12px;padding-left:15px;padding-right:15px}.brand img{width:155px}}
 @media(max-width:900px){.recruitment-intro{gap:5%;padding-top:50px}.recruitment-summary{padding:25px}.recruitment-body{gap:5%}.application-form{padding:25px}.application-contact{grid-template-columns:1fr;gap:0}.header nav{gap:20px;font-size:12px}}
-@media(max-width:600px){header.header{height:174px;grid-template-rows:60px 88px;row-gap:5px}.header nav{display:grid;grid-template-columns:repeat(2,max-content);gap:0 25px;justify-content:center}.road-topline{top:195px}.road-intro{top:max(230px,29%)}.recruitment-callout{display:block}.recruitment-callout .button{margin-top:28px}.recruitment-header{padding:15px 5%;gap:15px}.recruitment-header .brand img{width:130px}.recruitment-header .text-link{font-size:12px;gap:6px}.recruitment-intro{grid-template-columns:1fr;gap:35px;padding:45px 6%}.recruitment-intro h1{font-size:46px;letter-spacing:-2px}.recruitment-intro>div>p{font-size:15px}.recruitment-summary h2{font-size:28px}.recruitment-body{grid-template-columns:1fr;gap:35px;padding:40px 6% 55px}.recruitment-requirements h2{font-size:36px}.recruitment-requirements li{padding-bottom:18px}.application-form{padding:25px 19px}.application-form h2{font-size:31px}.application-document label{padding:17px 12px;gap:10px}.application-document b{font-size:13px}.application-documents-heading h3{font-size:18px}.recruitment-footer{font-size:12px}.applications-heading{flex-wrap:wrap;gap:15px}.application-record summary{padding:17px 13px;gap:10px;flex-wrap:wrap}.application-status{font-size:10px}.applicant-icon{width:33px;height:33px}.application-record summary b{font-size:14px}.application-record-body{padding:0 16px 22px}.application-record-body dl,.application-downloads{grid-template-columns:1fr}.application-received{padding:30px 23px}}
+@media(max-width:600px){header.header{height:174px;grid-template-rows:60px 88px;row-gap:5px}.header nav{display:grid;grid-template-columns:repeat(2,max-content);gap:0 25px;justify-content:center}.road-topline{top:195px}.road-intro{top:max(230px,29%)}.recruitment-header{padding:15px 5%;gap:15px}.recruitment-header .brand img{width:130px}.recruitment-header .text-link{font-size:12px;gap:6px}.recruitment-intro{grid-template-columns:1fr;gap:35px;padding:45px 6%}.recruitment-intro h1{font-size:46px;letter-spacing:-2px}.recruitment-intro>div>p{font-size:15px}.recruitment-summary h2{font-size:28px}.recruitment-body{grid-template-columns:1fr;gap:35px;padding:40px 6% 55px}.recruitment-requirements h2{font-size:36px}.recruitment-requirements li{padding-bottom:18px}.application-form{padding:25px 19px}.application-form h2{font-size:31px}.application-document label{padding:17px 12px;gap:10px}.application-document b{font-size:13px}.application-documents-heading h3{font-size:18px}.recruitment-footer{font-size:12px}.applications-heading{flex-wrap:wrap;gap:15px}.application-record summary{padding:17px 13px;gap:10px;flex-wrap:wrap}.application-status{font-size:10px}.applicant-icon{width:33px;height:33px}.application-record summary b{font-size:14px}.application-record-body{padding:0 16px 22px}.application-record-body dl,.application-downloads{grid-template-columns:1fr}.application-received{padding:30px 23px}}
 @media(prefers-reduced-motion:reduce){.application-spinner{animation:none}.application-document{transition:none}}
 
-@media(min-width:601px) and (max-width:760px){.recruitment-callout{grid-template-columns:1fr;gap:28px}}
+
+
+/* Recruitment: a real fleet photograph and a clear application path. */
+.recruitment-callout.section{position:relative;isolation:isolate;overflow:hidden;padding:86px 6% 64px;background:var(--wine);color:var(--ivory)}
+.recruitment-route{position:absolute;z-index:-1;top:-80px;right:-90px;width:min(65%,800px);height:auto;stroke:#f7f5f113;stroke-width:1;pointer-events:none}
+.recruitment-feature{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(36px,6vw,100px);align-items:center;max-width:1440px;margin:0 auto}
+.recruitment-kicker{display:flex;align-items:center;gap:12px;font-size:10px;font-weight:600;letter-spacing:2px;color:#eedce4}
+.recruitment-kicker>span{width:48px;height:1px;background:#d2a1b6;margin-left:5px}
+.recruitment-callout h2{margin:24px 0 21px;font-size:clamp(46px,5.3vw,78px);line-height:1.04;font-weight:500;letter-spacing:-3.5px}
+.recruitment-callout h2 em{color:#e8bccf}
+.recruitment-copy>p{max-width:420px;font-size:15px;line-height:1.85;color:#f0dfe7}
+.recruitment-callout .recruitment-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-height:60px;margin-top:28px;padding:11px 13px 11px 23px;border-radius:5px;font-size:13px;font-weight:600;box-shadow:0 7px 24px #26071a26}
+.recruitment-cta>span{display:grid;place-items:center;flex-shrink:0;width:36px;height:36px;border-radius:3px;background:#680d400c;transition:background .2s}
+.recruitment-cta:hover>span{background:#680d401b}
+.recruitment-note{display:block;margin-top:14px;font-size:11px;line-height:1.6;color:#dec0ce}
+.recruitment-visual{position:relative;min-width:0;height:385px;margin:0 0 12px;border:1px solid #ffffff24;border-radius:100px 10px 10px 10px;background:#370d27;box-shadow:0 20px 45px #28061a2e}
+.recruitment-visual:after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(180deg,#180b1433,transparent 40%,#180b1466)}
+.recruitment-visual>img{width:100%;height:100%;object-fit:cover;object-position:66% center;border-radius:inherit;display:block;transition:opacity .4s}
+.recruitment-visual-loading>img{opacity:0}.recruitment-visual-ready>img{opacity:1}
+.recruitment-image-loading{position:absolute;inset:0;overflow:hidden;border-radius:inherit;--skeleton-base:#723151;--skeleton-shine:#99557766}
+.recruitment-image-loading>.fm-skeleton{width:100%;height:100%;border-radius:inherit}
+.recruitment-photo-label{position:absolute;z-index:1;right:20px;top:20px;display:flex;align-items:center;gap:9px;padding:11px 13px;border:1px solid #ffffff38;border-radius:4px;background:#23121ccc;color:#fff;font-size:9px;letter-spacing:1.4px}
+.recruitment-visual figcaption{position:absolute;z-index:1;left:-24px;right:32px;bottom:-12px;display:flex;align-items:center;gap:17px;padding:23px 24px;border-radius:5px;background:var(--ivory);color:var(--wine);box-shadow:0 9px 30px #28061a20}
+.recruitment-caption-line{width:3px;height:35px;background:var(--sand);border-radius:2px;flex-shrink:0}
+.recruitment-visual figcaption div{flex:1;min-width:0}
+.recruitment-visual figcaption div>span{display:block;margin-bottom:7px;font-size:9px;font-weight:600;letter-spacing:1.8px;color:#7e686e}
+.recruitment-visual figcaption strong{display:block;font-family:Manrope,Arial,sans-serif;font-size:clamp(15px,1.5vw,21px);font-weight:600;letter-spacing:-.5px;line-height:1.35}
+.recruitment-visual figcaption>svg{flex-shrink:0}
+.recruitment-process{display:grid;grid-template-columns:190px minmax(0,1fr);gap:30px;max-width:1440px;margin:58px auto 0;padding-top:30px;border-top:1px solid #f7f5f12b}
+.recruitment-process-intro>span{font-size:9px;font-weight:600;letter-spacing:1.6px;color:#dfb5c8}
+.recruitment-process-intro>p{margin-top:10px;font-size:16px;line-height:1.5;letter-spacing:-.3px}
+.recruitment-process ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;list-style:none;padding:0;margin:0}
+.recruitment-process li{display:flex;align-items:center;gap:14px;min-width:0}
+.recruitment-step-icon{position:relative;display:grid;place-items:center;flex-shrink:0;width:43px;height:46px;border:1px solid #f7f5f138;border-radius:7px;background:#f7f5f108;color:#f1d6e2}
+.recruitment-step-icon>span{position:absolute;right:-6px;top:-8px;padding:1px 4px;background:var(--wine);font-size:9px;letter-spacing:1px;color:#e5b8cd}
+.recruitment-process h3{margin:0;font-size:13px;line-height:1.45;font-weight:600;letter-spacing:-.2px}
+.recruitment-process li p{margin-top:6px;font-size:11px;line-height:1.6;color:#dfc6d2;max-width:180px}
+@media(max-width:1100px){.recruitment-process{grid-template-columns:1fr;gap:24px}.recruitment-process-intro{display:flex;align-items:center;gap:22px}.recruitment-process-intro>p{margin:0;font-size:14px}.recruitment-process-intro br{display:none}.recruitment-visual{height:355px}.recruitment-visual figcaption{left:-16px;right:18px;padding:20px}.recruitment-callout h2{letter-spacing:-2.5px}}
+@media(max-width:760px){.recruitment-callout.section{padding:60px 7% 45px}.recruitment-feature{grid-template-columns:1fr;gap:35px}.recruitment-callout h2{font-size:clamp(46px,9vw,66px);margin-top:22px}.recruitment-copy>p{max-width:450px;font-size:14px}.recruitment-visual{height:330px;max-width:580px;width:100%;border-top-left-radius:75px;margin-bottom:12px}.recruitment-visual figcaption{left:16px;right:16px;bottom:-12px}.recruitment-visual figcaption strong{font-size:19px}.recruitment-process{margin-top:35px}.recruitment-process ol{gap:18px}.recruitment-process li{align-items:flex-start;flex-direction:column;gap:12px}.recruitment-process h3{font-size:12px}.recruitment-process li p{font-size:11px}}
+@media(max-width:480px){.recruitment-callout .recruitment-cta{gap:18px;max-width:100%;padding-left:17px;font-size:12px}.recruitment-visual{height:265px;border-top-left-radius:60px}.recruitment-photo-label{top:15px;right:15px;padding:9px 10px;font-size:8px}.recruitment-visual figcaption{left:12px;right:12px;gap:12px;padding:18px 15px}.recruitment-visual figcaption strong{font-size:16px}.recruitment-visual figcaption div>span{font-size:8px}.recruitment-process-intro{align-items:flex-start;flex-direction:column;gap:8px}.recruitment-process ol{grid-template-columns:1fr;gap:0}.recruitment-process li{flex-direction:row;align-items:center;gap:17px;padding:17px 0;border-bottom:1px solid #f7f5f11a}.recruitment-process li:first-child{padding-top:0}.recruitment-process li:last-child{padding-bottom:0;border-bottom:0}.recruitment-process h3{font-size:13px}.recruitment-process li p{max-width:none;margin-top:4px}.recruitment-step-icon{width:40px;height:42px}.recruitment-route{width:110%;right:-45%;top:25px}}
+@media(prefers-reduced-motion:reduce){.recruitment-visual>img,.recruitment-cta>span{transition:none}}
 
 /* Skeletons follow the real content loading state. */
 .fm-skeleton{position:relative;display:block;overflow:hidden;background:var(--skeleton-base,#e7e0dc);border-radius:5px;animation:none;isolation:isolate;pointer-events:none}
