@@ -39,7 +39,7 @@ Añádelas en la sección de variables de entorno de la aplicación y reinicia o
 
 No uses el prefijo `NEXT_PUBLIC_` para estas variables. No hay credenciales de OpenAI ni se necesita una suscripción de API para esta versión.
 
-El usuario y la contraseña administrativos se configuran en el servidor; no hay registro público de administradores. Las sesiones usan tokens aleatorios, se guardan mediante hash y expiran en una hora. Cambiar `ADMIN_USERNAME` o `ADMIN_PASSWORD` invalida las sesiones existentes. Los IDs de chofer se crean dentro del panel y sus PIN se almacenan con PBKDF2 y sal, nunca recuperables en texto.
+El usuario y la contraseña del administrador principal se configuran en el servidor. Las cuentas adicionales se crean desde la sección Usuarios administradores de `/control`; no hay registro público. Cada nueva cuenta tiene nombre, usuario único de 3 a 50 caracteres y contraseña de 16 a 128 caracteres. Todas tienen acceso completo al panel, incluida la creación de otros administradores. Sus contraseñas se guardan con scrypt y sal aleatoria en MySQL, sin texto recuperable. Las sesiones usan tokens aleatorios, se guardan mediante hash y expiran en una hora. Cambiar `ADMIN_USERNAME` o `ADMIN_PASSWORD` invalida las sesiones del administrador principal; las cuentas adicionales tienen sesiones independientes. Un cambio del hash de contraseña o la desactivación de una cuenta en la base revoca sus sesiones. Los IDs de chofer se crean dentro del panel y sus PIN se almacenan con PBKDF2 y sal, nunca recuperables en texto.
 
 ## 4. Verificar el arranque
 
@@ -84,3 +84,12 @@ Las tablas faltantes se crean al conectar por primera vez, usando el mismo mecan
 En `/control`, la sección Solicitudes de choferes muestra las 100 solicitudes más recientes, sus contactos, estado y descargas individuales. Las rutas de consulta, cambio de estado y descarga verifican la sesión administrativa del servidor. Un ID o PIN de chofer no concede acceso a estas solicitudes. Los estados Nueva, En revisión, Contactado y Cerrada son para seguimiento manual; una postulación no crea automáticamente una cuenta de chofer.
 
 Verificación del módulo: `pnpm test` comprueba el envío multipart, seis documentos, transacción y rollback, formato y tamaño, datos duplicados, consentimiento, origen, límites de envío y descargas administrativas. Las pruebas usan SQLite en memoria para ejecutar las consultas del módulo; la conexión MySQL de producción se valida en Hostinger.
+
+
+## Usuarios administradores
+
+Después de desplegar, ingresa con tu acceso actual en `/control/login`. En `/control`, busca Usuarios administradores y completa nombre, usuario, contraseña y confirmación. Una vez creado, el usuario podrá ingresar por la misma pantalla. Entrega las credenciales por un canal privado; el panel no permite consultar la contraseña guardada. Los nombres de usuario adicionales se guardan en minúsculas y no pueden repetir el usuario principal ni otro usuario existente.
+
+Las tablas `admin_users` y `admin_user_sessions` se crean automáticamente con el mecanismo existente al conectar MySQL. No se modifican ni borran las tablas o sesiones anteriores. No hacen falta variables de entorno nuevas. Para importar manualmente solo estas tablas, usa `db/admin-users.sql` en la base de Freight Master. Mantén las variables `ADMIN_USERNAME` y `ADMIN_PASSWORD` para conservar el acceso principal y la comprobación de configuración.
+
+La API `/api/control/admin-users` exige sesión administrativa; la creación también verifica el origen y limita los registros. La lista no devuelve hashes ni contraseñas. El inicio de sesión en `/api/admin/login` admite ambos tipos de cuenta y emite una cookie HttpOnly, SameSite=Strict, Secure en producción, con expiración de una hora. El cierre de sesión elimina el token en el servidor. Las pruebas del módulo ejecutan los manejadores reales con SQLite en memoria, incluyendo creación, duplicados, autenticación, expiración, revocación y cierre; la conexión al MySQL de Hostinger requiere comprobar el despliegue.

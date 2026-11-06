@@ -291,3 +291,21 @@
 .skeleton-control-page .skeleton-form{padding:22px;background:#ece5dc}
 @media(max-width:760px){.media-skeleton-shape{top:38%;right:7%;width:62%}.media-skeleton-image .media-skeleton-shape{top:35px;left:25px;width:75%}.skeleton-record{gap:12px}.skeleton-badge{width:62px}.skeleton-record-application{padding:20px 14px}.skeleton-page-header{gap:18px}.skeleton-logo{width:135px;height:50px}.skeleton-nav{display:none}.skeleton-page-header>.skeleton-action{width:140px;height:44px}.skeleton-page-hero{grid-template-columns:1fr;gap:35px;padding-top:25px}.skeleton-page-hero .skeleton-title{height:50px}.skeleton-page-image{min-height:240px;height:32svh}.skeleton-control-page>.skeleton-list{margin-top:25px}}
 @media(prefers-reduced-motion:reduce){.fm-skeleton:after{animation:none;display:none}}
+
+/* Personal administrative accounts. */
+.admin-users-section{margin:38px 0 54px;padding:30px;border:1px solid #d8ccbf;border-radius:10px;background:#fffcf8;scroll-margin-top:30px}
+.admin-users-heading{display:flex;align-items:center;gap:17px}.admin-users-emblem{display:grid;place-items:center;flex-shrink:0;width:49px;height:49px;background:#680d400d;color:var(--wine);border-radius:10px}
+.control .admin-users-heading h2{margin:0 0 8px}.admin-users-heading p{font-size:13px;color:#75676c;line-height:1.7}
+.admin-users-permissions{font-size:12px;line-height:1.8;color:#75676c;margin:20px 0 27px;padding-bottom:24px;border-bottom:1px solid #e3d9cf;max-width:850px}
+.admin-users-layout{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr);gap:35px;align-items:start}
+.admin-user-form-card{border-radius:7px}.admin-user-form-card h3,.admin-user-directory>h3{display:flex;align-items:center;gap:10px;margin:0 0 24px;font-size:17px;font-weight:600;letter-spacing:-.4px}
+.admin-user-form-card fieldset{min-width:0;padding:0;border:0;margin:0}.admin-user-form-card fieldset:disabled{opacity:.65}
+.admin-user-form-card .admin-input-help{font-size:10px;margin:-9px 0 20px;line-height:1.6}
+.admin-user-form-card .button{width:100%;gap:16px;margin-top:20px;font-size:12px;padding:16px 18px;border-radius:4px}
+.admin-password-toggle{display:flex;align-items:center;gap:8px;min-height:36px;padding:5px 0;background:none;font-size:11px;color:var(--wine)}
+.control-card .admin-user-privacy{display:flex;align-items:flex-start;gap:8px;margin-top:18px;font-size:10px;line-height:1.7}.admin-user-privacy svg{flex-shrink:0;margin-top:2px}
+.admin-user-form-card .error{margin-top:17px;color:#9b2443}.admin-user-form-card .form-status{color:#45613e;font-size:12px;margin-top:15px}
+.admin-user-record{display:flex;align-items:center;gap:13px;padding:20px 0;border-top:1px solid #e0d6cc;min-width:0}.admin-user-record>svg{color:var(--wine);flex-shrink:0}.admin-user-record>div{min-width:0;flex:1}.admin-user-record h4{margin:0;font-size:14px;font-weight:600;overflow-wrap:anywhere}.admin-user-record p{margin:6px 0;font-size:12px;color:#75676c;overflow-wrap:anywhere}.admin-user-record small{font-size:10px;color:#81756b}
+.admin-user-badge{padding:6px 9px;border-radius:4px;background:#eaf0e5;color:#49613e;font-size:10px;flex-shrink:0}.admin-user-inactive{background:#f4e5e9;color:#953455}
+.admin-user-directory-note{font-size:11px;line-height:1.9;color:#81756b;margin-top:20px}.admin-user-directory-note a{display:inline-flex;align-items:center;gap:4px;color:var(--wine);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:760px){.admin-users-section{padding:22px 18px}.admin-users-layout{grid-template-columns:1fr;gap:30px}.admin-users-heading{align-items:flex-start;gap:12px}.control .admin-users-heading h2{font-size:22px}.admin-user-form-card{padding:20px}.admin-user-record{gap:10px}.admin-user-badge{font-size:9px;padding:5px 7px}.admin-users-permissions{font-size:11px}}

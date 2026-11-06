@@ -17,7 +17,7 @@ Para producción: `pnpm run build` y `pnpm start`. La portada puede compilar sin
 
 ## Accesos
 
-La administración está en `/control`. Su inicio de sesión usa `ADMIN_USERNAME` y `ADMIN_PASSWORD` del servidor, con sesiones opacas, expiración, revocación por cambio de clave y límite de intentos. No depende de una cuenta de ChatGPT. Los choferes entran por el mismo chat de la portada y solo consultan las paradas que se les asignen.
+La administración está en `/control`. El acceso principal usa `ADMIN_USERNAME` y `ADMIN_PASSWORD` del servidor. Dentro de Usuarios administradores puedes crear cuentas personales adicionales guardadas en MySQL, con contraseñas protegidas mediante scrypt y sal aleatoria. Todas las cuentas administrativas tienen acceso completo al panel y pueden crear otras cuentas. El inicio de sesión conserva sesiones opacas, expiración de una hora, revocación por cambio de clave y límite de intentos por usuario y global. No depende de una cuenta de ChatGPT. Los choferes entran por el mismo chat de la portada y solo consultan las paradas que se les asignen.
 
 El chat público orienta sobre servicios y cotizaciones. La ubicación y las condiciones de seguridad se configuran desde el panel; si faltan, el chat lo indica. No hay IA conectada, seguimiento GPS, envío de correos o WhatsApp. El dictado compatible transforma voz en texto para revisar antes del envío; no almacena notas de audio.
 
@@ -29,6 +29,6 @@ Los dos videos completos se almacenan en partes en `assets/video-parts/`. El arr
 
 ## Verificación
 
-`pnpm typecheck`, `pnpm test` y `pnpm run build`. Las pruebas de aislamiento y revocación usan SQLite en memoria y las mismas consultas de lectura; no sustituyen una prueba del servidor MySQL de producción. `/api/health` permite verificar la conexión real cuando se configura Hostinger. No se migran datos de la instancia de ChatGPT Sites.
+`pnpm typecheck`, `pnpm test` y `pnpm run build`. Las pruebas de aislamiento, creación de administradores e inicio/cierre de sesión usan SQLite en memoria y ejecutan las rutas y consultas del módulo; no sustituyen una prueba del servidor MySQL de producción. `/api/health` permite verificar la conexión real cuando se configura Hostinger. No se migran datos de la instancia de ChatGPT Sites.
 
 La IA queda para otra etapa. Las autorizaciones de servidor se mantienen fuera de las respuestas del chat.

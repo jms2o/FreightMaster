@@ -14,7 +14,7 @@ try{
  assert.equal(permittedOrigin(new Request('http://internal:3000',{headers:{origin:'https://attacker.test'}})),false);
  assert.equal(permittedOrigin(new Request('http://internal:3000',{headers:{origin:'https://demo.hostinger.test.attacker.test'}})),false);
  assert.equal(permittedOrigin(new Request('http://internal:3000')),false);
- const sqlite=new DatabaseSync(':memory:');sqlite.exec('CREATE TABLE admin_sessions(token_hash TEXT,credential_version TEXT,expires_at INTEGER)');
+ const sqlite=new DatabaseSync(':memory:');sqlite.exec('CREATE TABLE admin_sessions(token_hash TEXT,credential_version TEXT,expires_at INTEGER); CREATE TABLE admin_users(id TEXT,username TEXT,password_hash TEXT,active INTEGER); CREATE TABLE admin_user_sessions(token_hash TEXT,admin_user_id TEXT,credential_version TEXT,expires_at INTEGER)');
  const database={prepare(sql){return {bind(...values){return {async first(){return sqlite.prepare(sql).get(...values)||null}}}}}};
  const token=randomBytes(36).toString('hex');sqlite.prepare('INSERT INTO admin_sessions VALUES(?,?,?)').run(createHash('sha256').update(token).digest('hex'),credentialVersion(),200);
  assert.equal(await sessionAdmin(database,token,100),true);assert.equal(await sessionAdmin(database,token,201),false);assert.equal(await sessionAdmin(database,undefined,100),false);assert.equal(await sessionAdmin(database,"' OR 1=1 --",100),false);
