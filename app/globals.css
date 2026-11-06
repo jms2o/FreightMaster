@@ -227,18 +227,25 @@
 .recruitment-cta:hover>span{background:#680d401b}
 .recruitment-note{display:block;margin-top:14px;font-size:11px;line-height:1.6;color:#dec0ce}
 .recruitment-visual{position:relative;min-width:0;height:385px;margin:0 0 12px;border:1px solid #ffffff24;border-radius:100px 10px 10px 10px;background:#370d27;box-shadow:0 20px 45px #28061a2e}
-.recruitment-visual:after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(180deg,#180b1433,transparent 40%,#180b1466)}
-.recruitment-visual>img{width:100%;height:100%;object-fit:cover;object-position:66% center;border-radius:inherit;display:block;transition:opacity .4s}
-.recruitment-visual-loading>img{opacity:0}.recruitment-visual-ready>img{opacity:1}
-.recruitment-image-loading{position:absolute;inset:0;overflow:hidden;border-radius:inherit;--skeleton-base:#723151;--skeleton-shine:#99557766}
+.recruitment-visual:after{content:'';position:absolute;z-index:1;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(180deg,#180b1433,transparent 40%,#180b1466)}
+.recruitment-visual>img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:66% center;border-radius:inherit;display:block}
+.recruitment-image-loading{position:absolute;z-index:0;inset:0;pointer-events:none;overflow:hidden;border-radius:inherit;--skeleton-base:#723151;--skeleton-shine:#99557766}
 .recruitment-image-loading>.fm-skeleton{width:100%;height:100%;border-radius:inherit}
-.recruitment-photo-label{position:absolute;z-index:1;right:20px;top:20px;display:flex;align-items:center;gap:9px;padding:11px 13px;border:1px solid #ffffff38;border-radius:4px;background:#23121ccc;color:#fff;font-size:9px;letter-spacing:1.4px}
-.recruitment-visual figcaption{position:absolute;z-index:1;left:-24px;right:32px;bottom:-12px;display:flex;align-items:center;gap:17px;padding:23px 24px;border-radius:5px;background:var(--ivory);color:var(--wine);box-shadow:0 9px 30px #28061a20}
+.recruitment-photo-label{position:absolute;z-index:2;pointer-events:none;right:20px;top:20px;display:flex;align-items:center;gap:9px;padding:11px 13px;border:1px solid #ffffff38;border-radius:4px;background:#23121ccc;color:#fff;font-size:9px;letter-spacing:1.4px}
+.recruitment-visual figcaption{position:absolute;z-index:2;left:-24px;right:32px;bottom:-12px;border-radius:5px;background:var(--ivory);color:var(--wine);box-shadow:0 9px 30px #28061a20}
+/* Both application links stay usable while the photo loads or fails. */
+.recruitment-copy{position:relative;z-index:2}
+.recruitment-cta{position:relative;z-index:1;pointer-events:auto}
+.recruitment-card-link{display:flex;align-items:center;gap:17px;padding:23px 24px;min-height:90px;border-radius:inherit;cursor:pointer}
+.recruitment-card-link>svg{transition:transform .2s}
+.recruitment-card-link:hover>svg{transform:translate(2px,-2px)}
+.recruitment-image-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:17px;color:#e8bccf;background:linear-gradient(130deg,#370d27,#702c4d);border-radius:inherit;pointer-events:none}
+.recruitment-image-fallback>span{font-size:12px;letter-spacing:3px}
 .recruitment-caption-line{width:3px;height:35px;background:var(--sand);border-radius:2px;flex-shrink:0}
-.recruitment-visual figcaption div{flex:1;min-width:0}
-.recruitment-visual figcaption div>span{display:block;margin-bottom:7px;font-size:9px;font-weight:600;letter-spacing:1.8px;color:#7e686e}
+.recruitment-caption-copy{flex:1;min-width:0}
+.recruitment-caption-copy>span{display:block;margin-bottom:7px;font-size:9px;font-weight:600;letter-spacing:1.8px;color:#7e686e}
 .recruitment-visual figcaption strong{display:block;font-family:Manrope,Arial,sans-serif;font-size:clamp(15px,1.5vw,21px);font-weight:600;letter-spacing:-.5px;line-height:1.35}
-.recruitment-visual figcaption>svg{flex-shrink:0}
+.recruitment-card-link>svg{flex-shrink:0}
 .recruitment-process{display:grid;grid-template-columns:190px minmax(0,1fr);gap:30px;max-width:1440px;margin:58px auto 0;padding-top:30px;border-top:1px solid #f7f5f12b}
 .recruitment-process-intro>span{font-size:9px;font-weight:600;letter-spacing:1.6px;color:#dfb5c8}
 .recruitment-process-intro>p{margin-top:10px;font-size:16px;line-height:1.5;letter-spacing:-.3px}
@@ -248,10 +255,10 @@
 .recruitment-step-icon>span{position:absolute;right:-6px;top:-8px;padding:1px 4px;background:var(--wine);font-size:9px;letter-spacing:1px;color:#e5b8cd}
 .recruitment-process h3{margin:0;font-size:13px;line-height:1.45;font-weight:600;letter-spacing:-.2px}
 .recruitment-process li p{margin-top:6px;font-size:11px;line-height:1.6;color:#dfc6d2;max-width:180px}
-@media(max-width:1100px){.recruitment-process{grid-template-columns:1fr;gap:24px}.recruitment-process-intro{display:flex;align-items:center;gap:22px}.recruitment-process-intro>p{margin:0;font-size:14px}.recruitment-process-intro br{display:none}.recruitment-visual{height:355px}.recruitment-visual figcaption{left:-16px;right:18px;padding:20px}.recruitment-callout h2{letter-spacing:-2.5px}}
+@media(max-width:1100px){.recruitment-process{grid-template-columns:1fr;gap:24px}.recruitment-process-intro{display:flex;align-items:center;gap:22px}.recruitment-process-intro>p{margin:0;font-size:14px}.recruitment-process-intro br{display:none}.recruitment-visual{height:355px}.recruitment-visual figcaption{left:-16px;right:18px}.recruitment-card-link{padding:20px}.recruitment-callout h2{letter-spacing:-2.5px}}
 @media(max-width:760px){.recruitment-callout.section{padding:60px 7% 45px}.recruitment-feature{grid-template-columns:1fr;gap:35px}.recruitment-callout h2{font-size:clamp(46px,9vw,66px);margin-top:22px}.recruitment-copy>p{max-width:450px;font-size:14px}.recruitment-visual{height:330px;max-width:580px;width:100%;border-top-left-radius:75px;margin-bottom:12px}.recruitment-visual figcaption{left:16px;right:16px;bottom:-12px}.recruitment-visual figcaption strong{font-size:19px}.recruitment-process{margin-top:35px}.recruitment-process ol{gap:18px}.recruitment-process li{align-items:flex-start;flex-direction:column;gap:12px}.recruitment-process h3{font-size:12px}.recruitment-process li p{font-size:11px}}
-@media(max-width:480px){.recruitment-callout .recruitment-cta{gap:18px;max-width:100%;padding-left:17px;font-size:12px}.recruitment-visual{height:265px;border-top-left-radius:60px}.recruitment-photo-label{top:15px;right:15px;padding:9px 10px;font-size:8px}.recruitment-visual figcaption{left:12px;right:12px;gap:12px;padding:18px 15px}.recruitment-visual figcaption strong{font-size:16px}.recruitment-visual figcaption div>span{font-size:8px}.recruitment-process-intro{align-items:flex-start;flex-direction:column;gap:8px}.recruitment-process ol{grid-template-columns:1fr;gap:0}.recruitment-process li{flex-direction:row;align-items:center;gap:17px;padding:17px 0;border-bottom:1px solid #f7f5f11a}.recruitment-process li:first-child{padding-top:0}.recruitment-process li:last-child{padding-bottom:0;border-bottom:0}.recruitment-process h3{font-size:13px}.recruitment-process li p{max-width:none;margin-top:4px}.recruitment-step-icon{width:40px;height:42px}.recruitment-route{width:110%;right:-45%;top:25px}}
-@media(prefers-reduced-motion:reduce){.recruitment-visual>img,.recruitment-cta>span{transition:none}}
+@media(max-width:480px){.recruitment-callout .recruitment-cta{gap:18px;max-width:100%;padding-left:17px;font-size:12px}.recruitment-visual{height:265px;border-top-left-radius:60px}.recruitment-photo-label{top:15px;right:15px;padding:9px 10px;font-size:8px}.recruitment-visual figcaption{left:12px;right:12px;}.recruitment-card-link{gap:12px;padding:18px 15px}.recruitment-visual figcaption strong{font-size:16px}.recruitment-caption-copy>span{font-size:8px}.recruitment-process-intro{align-items:flex-start;flex-direction:column;gap:8px}.recruitment-process ol{grid-template-columns:1fr;gap:0}.recruitment-process li{flex-direction:row;align-items:center;gap:17px;padding:17px 0;border-bottom:1px solid #f7f5f11a}.recruitment-process li:first-child{padding-top:0}.recruitment-process li:last-child{padding-bottom:0;border-bottom:0}.recruitment-process h3{font-size:13px}.recruitment-process li p{max-width:none;margin-top:4px}.recruitment-step-icon{width:40px;height:42px}.recruitment-route{width:110%;right:-45%;top:25px}}
+@media(prefers-reduced-motion:reduce){.recruitment-cta>span,.recruitment-card-link>svg{transition:none}}
 
 /* Skeletons follow the real content loading state. */
 .fm-skeleton{position:relative;display:block;overflow:hidden;background:var(--skeleton-base,#e7e0dc);border-radius:5px;animation:none;isolation:isolate;pointer-events:none}

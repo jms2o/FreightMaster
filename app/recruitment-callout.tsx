@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {ArrowUpRight,ClipboardCheck,FileUp,Send,Truck} from 'lucide-react';
 import {Skeleton} from '@/components/ui/skeleton';
 
@@ -12,6 +12,13 @@ const applicationSteps = [
 
 export default function RecruitmentCallout(){
   const [imageState,setImageState]=useState<'loading'|'ready'|'error'>('loading');
+  const imageRef=useRef<HTMLImageElement>(null);
+
+  useEffect(()=>{
+    // A cached image can finish before React attaches its load listener.
+    const image=imageRef.current;
+    if(image?.complete)setImageState(image.naturalWidth>0?'ready':'error');
+  },[]);
 
   return <section className="recruitment-callout section" aria-labelledby="join-team-title">
     <svg className="recruitment-route" viewBox="0 0 600 600" fill="none" aria-hidden="true"><path d="M600 30H340c-105 0-150 65-150 150v80c0 85-45 150-150 150H0"/><path d="M600 75H360c-85 0-125 50-125 125v80c0 100-55 175-165 175H0"/></svg>
@@ -25,9 +32,10 @@ export default function RecruitmentCallout(){
       </div>
       <figure className={`recruitment-visual recruitment-visual-${imageState}`} data-reveal>
         {imageState==='loading'&&<div className="recruitment-image-loading" role="status" aria-label="Cargando imagen de Freight Master"><Skeleton className="fm-skeleton"/></div>}
-        {imageState!=='error'&&<img src="/media/road-poster.jpg" alt="Tráiler de Freight Master en carretera" width={1440} height={810} loading="lazy" decoding="async" onLoad={()=>setImageState('ready')} onError={()=>setImageState('error')}/>}
+        {imageState!=='error'&&<img ref={imageRef} src="/media/road-poster.jpg" alt="Tráiler de Freight Master en carretera" width={1440} height={810} loading="lazy" decoding="async" onLoad={()=>setImageState('ready')} onError={()=>setImageState('error')}/>}
+        {imageState==='error'&&<div className="recruitment-image-fallback"><Truck size={56} strokeWidth={1} aria-hidden="true"/><span>FREIGHT MASTER</span></div>}
         <span className="recruitment-photo-label"><Truck size={16} aria-hidden="true"/> FREIGHT MASTER</span>
-        <figcaption><span className="recruitment-caption-line" aria-hidden="true"/><div><span>UN NUEVO CAMINO</span><strong>Comienza con tu solicitud.</strong></div><ArrowUpRight size={27} aria-hidden="true"/></figcaption>
+        <figcaption><a href="/trabaja-con-nosotros" className="recruitment-card-link"><span className="recruitment-caption-line" aria-hidden="true"/><span className="recruitment-caption-copy"><span>UN NUEVO CAMINO</span><strong>Comienza con tu solicitud.</strong></span><ArrowUpRight size={27} aria-hidden="true"/></a></figcaption>
       </figure>
     </div>
     <div className="recruitment-process" data-reveal>
