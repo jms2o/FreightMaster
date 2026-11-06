@@ -32,9 +32,9 @@ export default function RecruitmentCallout(){
       </div>
       <figure className={`recruitment-visual recruitment-visual-${imageState}`} data-reveal>
         {imageState==='loading'&&<div className="recruitment-image-loading" role="status" aria-label="Cargando imagen de Freight Master"><Skeleton className="fm-skeleton"/></div>}
-        {imageState!=='error'&&<img ref={imageRef} src="/media/road-poster.jpg" alt="Tráiler de Freight Master en carretera" width={1440} height={810} loading="lazy" decoding="async" onLoad={()=>setImageState('ready')} onError={()=>setImageState('error')}/>}
+        {imageState!=='error'&&<img ref={imageRef} src="/media/driver-recruitment.webp" alt="Imagen ilustrativa de un chofer en la cabina de un tráiler" width={1440} height={960} loading="lazy" decoding="async" onLoad={()=>setImageState('ready')} onError={()=>setImageState('error')}/>}
         {imageState==='error'&&<div className="recruitment-image-fallback"><Truck size={56} strokeWidth={1} aria-hidden="true"/><span>FREIGHT MASTER</span></div>}
-        <span className="recruitment-photo-label"><Truck size={16} aria-hidden="true"/> FREIGHT MASTER</span>
+        <span className="recruitment-photo-label"><Truck size={16} aria-hidden="true"/> IMAGEN ILUSTRATIVA</span>
         <figcaption><a href="/trabaja-con-nosotros" className="recruitment-card-link"><span className="recruitment-caption-line" aria-hidden="true"/><span className="recruitment-caption-copy"><span>UN NUEVO CAMINO</span><strong>Comienza con tu solicitud.</strong></span><ArrowUpRight size={27} aria-hidden="true"/></a></figcaption>
       </figure>
     </div>
