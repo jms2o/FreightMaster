@@ -3,6 +3,7 @@ import {useEffect,useState} from 'react';
 import {Download,RefreshCw,UserRound} from 'lucide-react';
 import {APPLICATION_STATUSES,DRIVER_REQUIREMENTS,STATUS_LABELS} from '@/lib/recruitment';
 import type {ApplicationStatus} from '@/lib/recruitment';
+import {SkeletonList} from '../loading-skeletons';
 
 type Application={id:string;name:string;email:string;phone:string;company:string;status:ApplicationStatus;created_at:string};
 type DocumentRecord={id:string;application_id:string;kind:string;filename:string;byte_size:number};
@@ -33,9 +34,9 @@ export default function Applications(){
     finally{setSaving('');}
   }
   return <section className="control-applications" id="postulaciones" aria-labelledby="applications-title">
-    <div className="applications-heading"><div><span className="eyebrow dark">RECLUTAMIENTO</span><h2 id="applications-title">Solicitudes de choferes <small>({data.applications.length})</small></h2><p>Consulta las 100 solicitudes más recientes y descarga sus documentos. El acceso operativo de un chofer se crea por separado.</p></div><button className="applications-refresh" type="button" disabled={loading} onClick={()=>void load()}><RefreshCw size={16}/> Actualizar</button></div>
+    <div className="applications-heading"><div><span className="eyebrow dark">RECLUTAMIENTO</span><h2 id="applications-title">Solicitudes de choferes {!loading&&!error&&<small>({data.applications.length})</small>}</h2><p>Consulta las 100 solicitudes más recientes y descarga sus documentos. El acceso operativo de un chofer se crea por separado.</p></div><button className="applications-refresh" type="button" disabled={loading} onClick={()=>void load()}><RefreshCw size={16}/> Actualizar</button></div>
     {error&&<p className="error" role="alert">{error}</p>}
-    {loading?<p className="empty" role="status">Cargando solicitudes…</p>:data.applications.length===0?<p className="empty">Todavía no hay solicitudes. Se reciben desde <a href="/trabaja-con-nosotros">Trabaja con nosotros</a>.</p>:<div className="application-records">{data.applications.map(application=>{
+    {loading?<SkeletonList label="Cargando solicitudes de choferes" kind="application"/>:error&&data.applications.length===0?null:data.applications.length===0?<p className="empty">Todavía no hay solicitudes. Se reciben desde <a href="/trabaja-con-nosotros">Trabaja con nosotros</a>.</p>:<div className="application-records">{data.applications.map(application=>{
       const documents=data.documents.filter(document=>document.application_id===application.id);
       return <details key={application.id} className="application-record"><summary><span className="applicant-icon"><UserRound size={20}/></span><span><b>{application.name}</b><small>{new Date(application.created_at).toLocaleDateString('es-MX',{timeZone:'UTC'})} · {documents.length} documentos</small></span><span className={`application-status status-${application.status}`}>{STATUS_LABELS[application.status]||'En revisión'}</span></summary><div className="application-record-body">
         <dl><div><dt>Correo</dt><dd><a href={`mailto:${application.email}`}>{application.email}</a></dd></div><div><dt>Teléfono</dt><dd><a href={`tel:${application.phone.replace(/[^+\d]/g,'')}`}>{application.phone}</a></dd></div>{application.company&&<div><dt>Empresa o razón social</dt><dd>{application.company}</dd></div>}<div><dt>Folio</dt><dd>{application.id.toUpperCase()}</dd></div></dl>
