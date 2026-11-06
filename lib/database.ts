@@ -8,7 +8,9 @@ export type BoundStatement = {
   run(): Promise<{success:boolean}>;
 };
 export type AppDatabase = {prepare(sql:string):BoundStatement & {bind(...values:unknown[]):BoundStatement}};
-type Pool = {execute(sql:string,values?:unknown[]):Promise<[unknown,unknown]>;query(sql:string):Promise<[unknown,unknown]>};
+type Executor = {execute(sql:string,values?:unknown[]):Promise<[unknown,unknown]>;query(sql:string):Promise<[unknown,unknown]>};
+type TransactionConnection = Executor & {beginTransaction():Promise<void>;commit():Promise<void>;rollback():Promise<void>;release():void};
+type Pool = Executor & {getConnection():Promise<TransactionConnection>};
 let pool:Pool|undefined;
 let initialized:Promise<void>|undefined;
 export function databaseConfigured(){return ['DB_HOST','DB_USER','DB_PASSWORD','DB_NAME'].every(k=>Boolean(process.env[k]));}
@@ -27,9 +29,19 @@ async function initialize(){
   })().catch(error=>{initialized=undefined;throw error});}
   return initialized;
 }
-function statement(sql:string,values:unknown[]=[]):BoundStatement & {bind(...values:unknown[]):BoundStatement}{
-  async function execute(){await initialize();return (await connection().execute(sql,values))[0];}
-  return {bind(...bound){return statement(sql,bound)},async first<T>(){const rows=await execute() as T[];return rows[0]??null},async all<T>(){return {results:await execute() as T[]}},async run(){await execute();return {success:true}}};
+function statement(sql:string,values:unknown[]=[],executor?:Executor):BoundStatement & {bind(...values:unknown[]):BoundStatement}{
+  async function execute(){if(!executor)await initialize();return (await (executor||connection()).execute(sql,values))[0];}
+  return {bind(...bound){return statement(sql,bound,executor)},async first<T>(){const rows=await execute() as T[];return rows[0]??null},async all<T>(){return {results:await execute() as T[]}},async run(){await execute();return {success:true}}};
 }
 const database:AppDatabase={prepare:sql=>statement(sql)};
 export function getDatabase(){return database;}
+export async function databaseTransaction<T>(work:(database:AppDatabase)=>Promise<T>):Promise<T>{
+  await initialize();
+  const client=await connection().getConnection();
+  try{
+    await client.beginTransaction();
+    const result=await work({prepare:sql=>statement(sql,[],client)});
+    await client.commit();return result;
+  }catch(error){await client.rollback();throw error;}
+  finally{client.release();}
+}

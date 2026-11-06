@@ -69,3 +69,18 @@ Referencias oficiales: https://www.hostinger.com/support/how-to-deploy-a-nodejs-
 El repositorio fija pnpm 11.24.0 y contiene `pnpm-workspace.yaml` con una política explícita `allowBuilds`. La cadena de ESLint y Drizzle ya no forma parte de las dependencias de esta aplicación: no es necesaria para compilar Next.js ni para las consultas MySQL. Esto elimina las dependencias esbuild/unrs-resolver que bloqueaban el primer despliegue con `ERR_PNPM_IGNORED_BUILDS`. Se mantiene la autorización concreta de `sharp` para las versiones que ejecutan instalación nativa.
 
 No se necesita ejecutar una aprobación interactiva en hPanel ni habilitar scripts para todos los paquetes. Conserva pnpm y vuelve a desplegar la versión nueva de `main`; reintentar una compilación fijada al commit anterior no incorpora esta corrección. Los avisos de actualización de pnpm y paquetes obsoletos no son el error que detuvo la instalación.
+
+
+## Postulaciones de choferes y documentos
+
+La página `/trabaja-con-nosotros` recibe nombre, correo, teléfono, empresa opcional y los seis documentos obligatorios: W9, Operational Authority (MC / DOT), Current Insurance, Voided Check, CDL (Driver License) y Registration. El Certificate holder indicado es FREIGHTMASTER USA, 950 Houston Northcutt Blvd, Mount Pleasant, SC 29464.
+
+Se aceptan PDF, JPG y PNG de hasta 3 MiB por archivo, con un límite total de solicitud de 19 MiB. Se comprueban extensión y firma del archivo, consentimiento, origen y límites de envío. Los documentos se descargan como adjuntos, nunca se ejecutan ni se muestran como páginas web. La validación de formato no es un análisis antivirus.
+
+Las solicitudes y archivos se guardan en MySQL en `driver_applications` y `driver_application_documents`. Se conserva el contenido binario en la base, fuera de `public/`, para que un despliegue no lo elimine. Cada solicitud se confirma en una transacción junto con sus seis documentos. La capacidad de la base y sus copias debe contemplar este contenido. No se envían a la IA ni a servicios externos.
+
+Las tablas faltantes se crean al conectar por primera vez, usando el mismo mecanismo de la aplicación. Para una importación manual de solo este módulo, selecciona la base de Freight Master en phpMyAdmin e importa `db/driver-applications.sql`. No incluye borrados. No necesitas variables nuevas ni acceso remoto a MySQL. Mantén las variables DB y APP_URL ya configuradas; si el host rechaza archivos grandes por tamaño de petición, ajusta el límite de entrada a al menos 19 MiB o carga documentos más pequeños. Cada inserción de documento ocupa un máximo de 3 MiB, por lo que `max_allowed_packet` debe admitirlo más el margen del protocolo.
+
+En `/control`, la sección Solicitudes de choferes muestra las 100 solicitudes más recientes, sus contactos, estado y descargas individuales. Las rutas de consulta, cambio de estado y descarga verifican la sesión administrativa del servidor. Un ID o PIN de chofer no concede acceso a estas solicitudes. Los estados Nueva, En revisión, Contactado y Cerrada son para seguimiento manual; una postulación no crea automáticamente una cuenta de chofer.
+
+Verificación del módulo: `pnpm test` comprueba el envío multipart, seis documentos, transacción y rollback, formato y tamaño, datos duplicados, consentimiento, origen, límites de envío y descargas administrativas. Las pruebas usan SQLite en memoria para ejecutar las consultas del módulo; la conexión MySQL de producción se valida en Hostinger.
