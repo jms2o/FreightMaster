@@ -100,3 +100,8 @@ La API `/api/control/admin-users` exige sesión administrativa; la creación tam
 Despliega la versión nueva de `main`. Usa el selector Español / English del menú, la postulación o la administración para cambiar la interfaz. La elección se conserva con una cookie funcional; no hay nuevas variables, tablas ni importaciones SQL para este cambio. Las páginas se renderizan por petición para respetar la preferencia de cada visitante.
 
 Para las respuestas propias de la empresa, entra a `/control` → Información del asistente público. Ahí puedes guardar ubicación y condiciones de seguridad en español y sus versiones en inglés. Si una versión inglesa está vacía, el chat conserva la información original con una indicación; no inventa traducciones de políticas ni modifica las instrucciones operativas del chofer.
+
+
+## Panel por secciones
+
+Después de desplegar, entra con el mismo usuario en `/control/login`. El menú abre páginas independientes de Choferes, Itinerarios, Postulaciones, Cotizaciones, Usuarios y Asistente público. En celular se abre con el botón de menú; también se puede cerrar con Escape. El resumen de `/control` permite entrar directamente a cada módulo. Se conserva la preferencia Español / English. Este cambio solo reorganiza las herramientas: no requiere importar SQL ni configurar variables nuevas.

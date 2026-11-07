@@ -41,3 +41,10 @@ La interfaz está disponible en español e inglés. El selector Idioma / Languag
 Se traducen navegación, servicios, reclutamiento, formularios, estados, accesibilidad, mensajes de error, administración y respuestas guiadas del chat. El dictado usa `es-MX` o `en-US` según la selección. Los nombres de personas, direcciones, referencias, archivos, instrucciones y otros datos ingresados se conservan en su idioma original.
 
 En Información del asistente público se pueden guardar versiones en español e inglés de ubicación y seguridad. El chat muestra la versión correspondiente; si falta la inglesa, conserva el texto original y lo identifica. Estas versiones usan las claves `address_en` y `security_en` de la tabla de configuración existente. No hay un servicio externo de traducción ni variables nuevas. `pnpm test` incluye renderizado de las pantallas en ambos idiomas, selector y persistencia de la preferencia, respuestas del chat y conservación de datos operativos.
+
+
+## Navegación administrativa
+
+El panel usa páginas independientes bajo una estructura común con menú lateral y menú modal en móvil. `/control` muestra accesos directos; `/control/choferes` gestiona choferes; `/control/itinerarios` organiza paradas; `/control/postulaciones` revisa solicitudes y documentos; `/control/cotizaciones` muestra solicitudes de cotización; `/control/usuarios` crea administradores; `/control/configuracion` configura el asistente público. Cada módulo conserva los dos idiomas y carga solo la información que necesita.
+
+La estructura protegida está en `app/control/(panel)/layout.tsx`. El inicio de sesión permanece fuera de ese grupo, en `/control/login`. Las páginas exigen sesión y las API siguen validando cada lectura y cambio. Los parámetros opcionales `section` de `/api/control` y `/api/itinerary` limitan los datos por módulo; las consultas anteriores sin ese parámetro mantienen su respuesta. No hay tablas ni variables nuevas.

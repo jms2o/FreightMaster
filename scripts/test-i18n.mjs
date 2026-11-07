@@ -8,12 +8,13 @@ import {driverReply} from '../lib/driver-reply.ts';
 const root=path.resolve('.'),require=createRequire(path.join(root,'package.json'));
 const ts=require('typescript'),React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
 const modules=new Map();
+let currentPathname='/control';
 function source(file){
  const resolved=['','.tsx','.ts','.js','/index.tsx','/index.ts'].map(suffix=>file+suffix).find(candidate=>existsSync(candidate)&&/\.(tsx|ts|js)$/.test(candidate));
  if(!resolved)throw Error('Missing test module: '+file);
  if(modules.has(resolved))return modules.get(resolved).exports;
  const module=new Module(resolved);module.paths=Module._nodeModulePaths(path.dirname(resolved));modules.set(resolved,module);
- module.require=name=>name.startsWith('@/')?source(path.join(root,name.slice(2))):name.startsWith('.')?source(path.resolve(path.dirname(resolved),name)):require(name);
+ module.require=name=>name==='next/navigation'?{usePathname:()=>currentPathname}:name==='next/link'?({prefetch,children,...props})=>React.createElement('a',props,children):name.startsWith('@/')?source(path.join(root,name.slice(2))):name.startsWith('.')?source(path.resolve(path.dirname(resolved),name)):require(name);
  module._compile(ts.transpileModule(readFileSync(resolved,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText,resolved);
  return module.exports;
 }
@@ -38,19 +39,29 @@ assert.match(driverReply('Emergency','José','2026-11-06',[],'en'),/emergency se
 const {LanguageProvider,LanguageSwitcher}=source(path.join(root,'app/language.tsx'));
 function render(file,locale,props={}){const Component=source(path.join(root,file)).default;return renderToStaticMarkup(React.createElement(LanguageProvider,{initialLocale:locale},React.createElement(Component,props)));}
 for(const locale of ['es','en']){
- const home=render('app/page.tsx',locale),recruitment=render('app/trabaja-con-nosotros/recruitment-content.tsx',locale),panel=render('app/control/panel.tsx',locale),login=render('app/control/login/page.tsx',locale);
+ const home=render('app/page.tsx',locale),recruitment=render('app/trabaja-con-nosotros/recruitment-content.tsx',locale),panel=render('app/control/panel.tsx',locale,{children:React.createElement('p',null,'Workspace content')}),login=render('app/control/login/page.tsx',locale);
  assert.ok(home.includes(locale==='en'?'Request a quote':'Solicitar cotización'));
  assert.ok(home.includes(locale==='en'?'View requirements and apply':'Ver requisitos y postularme'));
  assert.ok(home.includes('/media/driver-recruitment.webp'));assert.ok(home.includes('/media/freight-road-wide.mp4'));assert.ok(!/autoplay/i.test(home));
  assert.equal((recruitment.match(/type="file"/g)||[]).length,6);
  assert.ok(recruitment.includes('FREIGHTMASTER USA'));assert.ok(recruitment.includes('950 Houston Northcutt Blvd, Mount Pleasant, SC 29464'));
  assert.ok(recruitment.includes(locale==='en'?'Upload your documents':'Sube tus documentos'));
- assert.ok(panel.includes(locale==='en'?'Create administrator':'Crear administrador'));
- assert.ok(panel.includes('name="confirmPassword"'));assert.ok(panel.includes(locale==='en'?'Driver itineraries':'Itinerarios de choferes'));
+ const users=render('app/control/admin-users.tsx',locale);assert.ok(users.includes(locale==='en'?'Create administrator':'Crear administrador'));
+ assert.ok(users.includes('name="confirmPassword"'));const itineraries=render('app/control/itineraries.tsx',locale);assert.ok(itineraries.includes(locale==='en'?'Driver itineraries':'Itinerarios de choferes'));assert.ok(!itineraries.includes('name="address_en"'));const settings=render('app/control/itineraries.tsx',locale,{view:'settings'});assert.ok(settings.includes(locale==='en'?'Public assistant information':'Información del asistente público'));assert.ok(!settings.includes('name="driverId"'));const drivers=render('app/control/drivers.tsx',locale);assert.ok(drivers.includes('name="pin"'));assert.ok(!drivers.includes('name="confirmPassword"'));const overview=render('app/control/overview.tsx',locale);assert.ok(overview.includes('/control/choferes'));assert.ok(!overview.includes('name="pin"'));
  assert.ok(login.includes(locale==='en'?'Sign in':'Ingresar'));
  for(const html of [home,recruitment,panel,login]){assert.ok(html.includes('aria-label="Idioma / Language"'));assert.ok(html.includes(`<option value="${locale}" lang="${locale}" selected=""`));}
  const composer=render('app/chat-composer.tsx',locale,{send(){},busy:false});assert.ok(composer.includes(locale==='en'?'Type your message':'Escribe tu mensaje'));
 }
+for(const route of ['/control','/control/choferes','/control/itinerarios','/control/postulaciones','/control/cotizaciones','/control/usuarios','/control/configuracion']){
+ currentPathname=route;
+ const shell=render('app/control/panel.tsx','en',{children:React.createElement('div',null,'Only this module')});
+ assert.ok(shell.includes(`href="${route}" aria-current="page"`));
+ assert.ok(shell.includes('aria-label="Close menu"'));assert.ok(shell.includes('aria-label="Sign out"'));
+ assert.ok(shell.includes('Only this module'));assert.ok(!shell.includes('name="pin"'));
+ const file=route==='/control'?'app/control/(panel)/page.tsx':`app/control/(panel)/${route.split('/').at(-1)}/page.tsx`;
+ const html=render(file,'en');assert.ok(html.length>0);
+}
+currentPathname='/control';
 // Both language choices are available in server-rendered output.
 const selector=renderToStaticMarkup(React.createElement(LanguageProvider,{initialLocale:'en'},React.createElement(LanguageSwitcher)));
 assert.ok(selector.includes('Español'));assert.ok(selector.includes('English'));

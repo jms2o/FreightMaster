@@ -43,15 +43,32 @@ function route(file){
 }
 const users=route('app/api/control/admin-users/route.ts'),login=route('app/api/admin/login/route.ts'),logout=route('app/api/admin/logout/route.ts');
 const request=(url,body,origin='https://freight.test')=>new Request('https://freight.test'+url,{method:'POST',headers:{origin,'content-type':'application/json',...(currentToken?{cookie:'fm_admin='+currentToken}:{})},body:JSON.stringify(body)});
+sqlite.exec(`CREATE TABLE drivers(id TEXT PRIMARY KEY,name TEXT,active INTEGER,created_at TEXT);
+ CREATE TABLE quotes(id TEXT PRIMARY KEY,company TEXT,created_at TEXT);
+ CREATE TABLE itinerary_stops(id TEXT PRIMARY KEY,driver_id TEXT,date TEXT,sequence INTEGER);
+ CREATE TABLE company_settings(\`key\` TEXT PRIMARY KEY,value TEXT);
+ INSERT INTO drivers VALUES('DRV1','Driver test',1,'2026-11-06');
+ INSERT INTO quotes VALUES('Q1','Company test','2026-11-06');
+ INSERT INTO itinerary_stops VALUES('STOP1','DRV1','2026-11-06',1);
+ INSERT INTO company_settings VALUES('address','Public address');`);
+const control=route('app/api/control/route.ts'),itinerary=route('app/api/itinerary/route.ts');
+const get=(path)=>new Request('https://freight.test'+path);
 const body={name:'Operations Test',username:'operations.test',password:randomBytes(18).toString('hex')};body.confirmPassword=body.password;
 const count=()=>sqlite.prepare('SELECT COUNT(*) AS n FROM admin_users').get().n;
 function tokenFrom(response){const cookie=response.headers.get('set-cookie');assert.match(cookie,/HttpOnly/);assert.match(cookie,/SameSite=Strict/);assert.match(cookie,/Max-Age=3600/);return cookie.match(/fm_admin=([a-f0-9]{72})/)[1];}
 try{
  process.env.ADMIN_USERNAME='owner';process.env.ADMIN_PASSWORD=randomBytes(24).toString('hex');process.env.APP_URL='https://freight.test';
- assert.equal((await users.GET()).status,403);
+ assert.equal((await users.GET()).status,403);assert.equal((await control.GET(get('/api/control?section=drivers'))).status,403);assert.equal((await itinerary.GET(get('/api/itinerary?section=settings'))).status,403);
  assert.equal((await users.POST(request('/api/control/admin-users',body))).status,403);assert.equal(count(),0);
  let response=await login.POST(request('/api/admin/login',{username:'owner',password:process.env.ADMIN_PASSWORD}));assert.equal(response.status,200);currentToken=tokenFrom(response);const ownerToken=currentToken;
  assert.equal(await security.sessionAdmin(database,currentToken),true);
+ let scoped=await (await control.GET(get('/api/control?section=drivers'))).json();assert.equal(scoped.drivers.length,1);assert.equal(scoped.quotes.length,0);
+ scoped=await (await control.GET(get('/api/control?section=quotes'))).json();assert.equal(scoped.drivers.length,0);assert.equal(scoped.quotes.length,1);
+ scoped=await (await control.GET(get('/api/control'))).json();assert.equal(scoped.drivers.length,1);assert.equal(scoped.quotes.length,1);
+ scoped=await (await itinerary.GET(get('/api/itinerary?section=settings'))).json();assert.equal(scoped.stops.length,0);assert.equal(scoped.settings.address,'Public address');
+ scoped=await (await itinerary.GET(get('/api/itinerary?section=itineraries'))).json();assert.equal(scoped.stops.length,1);assert.deepEqual(scoped.settings,{});
+ assert.equal((await control.GET(get('/api/control?section=unknown'))).status,400);assert.equal((await itinerary.GET(get('/api/itinerary?section=unknown'))).status,400);
+
  assert.equal((await users.POST(request('/api/control/admin-users',body,'https://attacker.test'))).status,403);
  for(const change of [{password:'short',confirmPassword:'short'},{confirmPassword:'does-not-match'},{name:'x'},{username:"' OR 1=1 --"},{username:' x '},{username:'x'.repeat(51)},{password:'x'.repeat(129),confirmPassword:'x'.repeat(129)},{name:'Bad\u0000Name'}])assert.equal((await users.POST(request('/api/control/admin-users',{...body,...change}))).status,400);
  assert.equal((await users.POST(request('/api/control/admin-users',{...body,username:'OWNER'}))).status,409);assert.equal(count(),0);
