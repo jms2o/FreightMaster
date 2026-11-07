@@ -93,3 +93,10 @@ Después de desplegar, ingresa con tu acceso actual en `/control/login`. En `/co
 Las tablas `admin_users` y `admin_user_sessions` se crean automáticamente con el mecanismo existente al conectar MySQL. No se modifican ni borran las tablas o sesiones anteriores. No hacen falta variables de entorno nuevas. Para importar manualmente solo estas tablas, usa `db/admin-users.sql` en la base de Freight Master. Mantén las variables `ADMIN_USERNAME` y `ADMIN_PASSWORD` para conservar el acceso principal y la comprobación de configuración.
 
 La API `/api/control/admin-users` exige sesión administrativa; la creación también verifica el origen y limita los registros. La lista no devuelve hashes ni contraseñas. El inicio de sesión en `/api/admin/login` admite ambos tipos de cuenta y emite una cookie HttpOnly, SameSite=Strict, Secure en producción, con expiración de una hora. El cierre de sesión elimina el token en el servidor. Las pruebas del módulo ejecutan los manejadores reales con SQLite en memoria, incluyendo creación, duplicados, autenticación, expiración, revocación y cierre; la conexión al MySQL de Hostinger requiere comprobar el despliegue.
+
+
+## Español e inglés
+
+Despliega la versión nueva de `main`. Usa el selector Español / English del menú, la postulación o la administración para cambiar la interfaz. La elección se conserva con una cookie funcional; no hay nuevas variables, tablas ni importaciones SQL para este cambio. Las páginas se renderizan por petición para respetar la preferencia de cada visitante.
+
+Para las respuestas propias de la empresa, entra a `/control` → Información del asistente público. Ahí puedes guardar ubicación y condiciones de seguridad en español y sus versiones en inglés. Si una versión inglesa está vacía, el chat conserva la información original con una indicación; no inventa traducciones de políticas ni modifica las instrucciones operativas del chofer.

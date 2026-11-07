@@ -32,3 +32,12 @@ Los dos videos completos se almacenan en partes en `assets/video-parts/`. El arr
 `pnpm typecheck`, `pnpm test` y `pnpm run build`. Las pruebas de aislamiento, creación de administradores e inicio/cierre de sesión usan SQLite en memoria y ejecutan las rutas y consultas del módulo; no sustituyen una prueba del servidor MySQL de producción. `/api/health` permite verificar la conexión real cuando se configura Hostinger. No se migran datos de la instancia de ChatGPT Sites.
 
 La IA queda para otra etapa. Las autorizaciones de servidor se mantienen fuera de las respuestas del chat.
+
+
+## Idiomas
+
+La interfaz está disponible en español e inglés. El selector Idioma / Language aparece en el menú principal, la página de postulación, el inicio de sesión y el panel. La preferencia se guarda en la cookie funcional `fm_language` durante un año y se usa desde el renderizado del servidor, incluidos el atributo `lang` y los metadatos públicos. El cambio en la página actual usa estado compartido, sin recargar ni reiniciar formularios.
+
+Se traducen navegación, servicios, reclutamiento, formularios, estados, accesibilidad, mensajes de error, administración y respuestas guiadas del chat. El dictado usa `es-MX` o `en-US` según la selección. Los nombres de personas, direcciones, referencias, archivos, instrucciones y otros datos ingresados se conservan en su idioma original.
+
+En Información del asistente público se pueden guardar versiones en español e inglés de ubicación y seguridad. El chat muestra la versión correspondiente; si falta la inglesa, conserva el texto original y lo identifica. Estas versiones usan las claves `address_en` y `security_en` de la tabla de configuración existente. No hay un servicio externo de traducción ni variables nuevas. `pnpm test` incluye renderizado de las pantallas en ambos idiomas, selector y persistencia de la preferencia, respuestas del chat y conservación de datos operativos.

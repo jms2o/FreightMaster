@@ -1,4 +1,7 @@
 import type {Metadata} from 'next';
+import {cookies} from 'next/headers';
+import {asLocale,translate} from '@/lib/i18n';
+import {LanguageProvider} from './language';
 import './globals.css';
-export const metadata:Metadata={title:'Freight Master',description:'Logística y traslado de mercancías en contenedores. Solicita una cotización.',icons:{icon:'/favicon.svg'}};
-export default function Layout({children}:{children:React.ReactNode}){return <html lang="es"><body>{children}</body></html>}
+export async function generateMetadata():Promise<Metadata>{const locale=asLocale((await cookies()).get('fm_language')?.value);return {title:'Freight Master',description:translate('Logística y traslado de mercancías en contenedores. Solicita una cotización.',locale),icons:{icon:'/favicon.svg'}};}
+export default async function Layout({children}:{children:React.ReactNode}){const locale=asLocale((await cookies()).get('fm_language')?.value);return <html lang={locale}><body><LanguageProvider initialLocale={locale}>{children}</LanguageProvider></body></html>;}
