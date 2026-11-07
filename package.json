@@ -6,8 +6,8 @@
     "node": "24.x"
   },
   "scripts": {
-    "dev": "node scripts/restore-media.mjs && next dev -H 0.0.0.0",
-    "build": "node scripts/restore-media.mjs && next build --webpack",
+    "dev": "next dev -H 0.0.0.0",
+    "build": "next build --webpack",
     "start": "next start -H 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types scripts/test-access.mjs && node --experimental-strip-types scripts/test-admin.mjs && node --experimental-strip-types scripts/test-applications.mjs && node --experimental-strip-types scripts/test-admin-users.mjs && node --experimental-strip-types scripts/test-i18n.mjs",

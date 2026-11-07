@@ -1,6 +1,6 @@
 # Publicar Freight Master en Hostinger
 
-Esta rama usa Next.js en Node.js 24 y MySQL. Conserva el video real, la experiencia con scroll, el icono del chat, las cotizaciones, los itinerarios y el acceso ID/PIN. La IA no está conectada.
+Esta rama usa Next.js en Node.js 24 y MySQL. Usa una portada fija y ligera y conserva el icono del chat, las cotizaciones, los itinerarios y el acceso ID/PIN. La IA no está conectada.
 
 ## 1. Crear la aplicación
 
@@ -43,7 +43,7 @@ El usuario y la contraseña del administrador principal se configuran en el serv
 
 ## 4. Verificar el arranque
 
-1. Abre `/`: deben aparecer la portada, el video y los servicios.
+1. Abre `/`: deben aparecer la portada fija y los servicios.
 2. Abre `/api/health`: debe responder `ok: true`. Un 503 indica que falta configuración o que no se pudo conectar MySQL; no devuelve contraseñas.
 3. Abre `/control`: debe llevarte a `/control/login`. Entra con las variables administrativas.
 4. Crea dos choferes y asigna una parada distinta a cada uno. Comprueba que solo vean su propio itinerario.
@@ -52,9 +52,11 @@ El usuario y la contraseña del administrador principal se configuran en el serv
 
 Si la portada abre pero las escrituras devuelven 403, revisa que `APP_URL` coincida exactamente con el dominio HTTPS de la página. Si hay un error de MySQL, verifica los nombres completos, la clave y el host `127.0.0.1`.
 
-## Archivos de video
+## Portada fija y video archivado
 
-Los videos están en partes pequeñas dentro de `assets/video-parts/` para evitar el límite de transferencia. `pnpm dev` y `pnpm run build` reconstruyen los MP4 automáticamente y comprueban SHA-256. También puedes ejecutar `pnpm media:restore`. No hay descargas externas ni diferencias en la película final.
+La portada muestra una imagen WebP de unos 59 KB y una versión móvil de unos 56 KB. El texto y los botones se renderizan sin esperar a la imagen. Ya no hay video, recorrido de scroll ni estado «Preparando el recorrido» en el inicio.
+
+Los MP4 anteriores permanecen archivados en `assets/video-parts/`; el comando opcional `pnpm media:restore` permite recuperarlos manualmente. Los comandos de desarrollo y compilación ya no los reconstruyen y la página no descarga MP4. No hacen falta variables nuevas ni cambios de base de datos.
 
 ## Límites de esta migración
 
@@ -109,6 +111,6 @@ Después de desplegar, entra con el mismo usuario en `/control/login`. El menú 
 
 ## Ajustes para móviles
 
-La portada usa un encabezado compacto y menú modal hasta 1100 px. Los campos se organizan en una columna en teléfonos, los controles de texto usan un tamaño legible de 16 px y los botones principales tienen áreas táctiles de al menos 44 px. Se contemplan los márgenes seguros de iPhone y pantallas pequeñas en horizontal. El chat se adapta al espacio disponible cuando aparece el teclado; conserva su botón de cierre y el campo para escribir. No se cambia el avance del video mediante scroll ni el acceso administrativo.
+La portada usa un encabezado compacto y menú modal hasta 1100 px. Los campos se organizan en una columna en teléfonos, los controles de texto usan un tamaño legible de 16 px y los botones principales tienen áreas táctiles de al menos 44 px. Se contemplan los márgenes seguros de iPhone y pantallas pequeñas en horizontal. El chat se adapta al espacio disponible cuando aparece el teclado; conserva su botón de cierre y el campo para escribir. La portada fija evita la descarga de video y se conserva el acceso administrativo.
 
 Publica la versión nueva de `main` con la configuración existente. No hay cambios de base de datos ni variables nuevas.

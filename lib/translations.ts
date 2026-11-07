@@ -482,5 +482,7 @@ export const ENGLISH:Record<string,string> = {
   "Cargando sección del panel": "Loading panel section",
   "Sección no válida.": "Invalid section.",
   "Cotizar": "Quote",
-  "Menú": "Menu"
+  "Menú": "Menu",
+  "Tráiler de Freight Master en carretera": "Freight Master truck on the road",
+  "Imagen: Jonathan David · Pexels": "Image: Jonathan David · Pexels"
 };

@@ -1,6 +1,6 @@
 # Freight Master
 
-Prototipo web de logística para Node.js 24, Next.js y MySQL, preparado para el alojamiento Node.js de Hostinger. Incluye portada con video real, servicios interactivos, cotizaciones persistentes, administración de choferes e itinerarios y un chat guiado con ID/PIN.
+Prototipo web de logística para Node.js 24, Next.js y MySQL, preparado para el alojamiento Node.js de Hostinger. Incluye portada con imagen fija optimizada, servicios interactivos, cotizaciones persistentes, administración de choferes e itinerarios y un chat guiado con ID/PIN.
 
 ## Desplegar
 
@@ -21,11 +21,13 @@ La administración está en `/control`. El acceso principal usa `ADMIN_USERNAME`
 
 El chat público orienta sobre servicios y cotizaciones. La ubicación y las condiciones de seguridad se configuran desde el panel; si faltan, el chat lo indica. No hay IA conectada, seguimiento GPS, envío de correos o WhatsApp. El dictado compatible transforma voz en texto para revisar antes del envío; no almacena notas de audio.
 
-## Video y marca
+## Portada y marca
 
-Fuente: Jonathan David, Pexels, https://www.pexels.com/video/white-truck-driving-at-sunset-on-highway-33870727/ (licencia: https://www.pexels.com/license/). La escena de stock está marcada como ilustrativa. El logo se integra mediante seguimiento de perspectiva; el icono del asistente es un SVG propio de la interfaz en vino, marfil y arena.
+Fuente: Jonathan David, Pexels, https://www.pexels.com/video/white-truck-driving-at-sunset-on-highway-33870727/ (licencia: https://www.pexels.com/license/). La imagen fija procede de la escena de stock y está marcada como ilustrativa. El icono del asistente es un SVG propio de la interfaz en vino, marfil y arena.
 
-Los dos videos completos se almacenan en partes en `assets/video-parts/`. El arranque de desarrollo y la compilación reconstruyen automáticamente sus MP4 y verifican SHA-256. `pnpm media:restore` también lo hace. No requiere descargas.
+El inicio usa `public/media/home-hero.webp` (59,138 bytes) y la variante móvil `home-hero-mobile.webp` (56,128 bytes), con carga prioritaria. No incluye reproductor, skeleton multimedia, listeners para avanzar video ni una sección de varias pantallas. El contenido y los enlaces funcionan aunque la imagen falle.
+
+Los videos anteriores permanecen archivados en `assets/video-parts/` y solo se reconstruyen manualmente con `pnpm media:restore`. El desarrollo y la compilación ya no ejecutan ese proceso, y la portada no solicita archivos MP4.
 
 ## Verificación
 

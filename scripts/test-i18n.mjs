@@ -42,7 +42,7 @@ for(const locale of ['es','en']){
  const home=render('app/page.tsx',locale),recruitment=render('app/trabaja-con-nosotros/recruitment-content.tsx',locale),panel=render('app/control/panel.tsx',locale,{children:React.createElement('p',null,'Workspace content')}),login=render('app/control/login/page.tsx',locale);
  assert.ok(home.includes(locale==='en'?'Request a quote':'Solicitar cotización'));
  assert.ok(home.includes(locale==='en'?'View requirements and apply':'Ver requisitos y postularme'));
- assert.ok(home.includes('/media/driver-recruitment.webp'));assert.ok(home.includes('/media/freight-road-wide.mp4'));assert.ok(!/autoplay/i.test(home));
+ assert.ok(home.includes('/media/driver-recruitment.webp'));assert.ok(home.includes('/media/home-hero-mobile.webp'));assert.ok(home.includes('/media/home-hero.webp'));assert.ok(!/<video\b|\.mp4|Preparando el recorrido|Preparing your journey/.test(home));assert.ok(home.includes('fetchPriority="high"')||home.includes('fetchpriority="high"'));
  assert.equal((recruitment.match(/type="file"/g)||[]).length,6);
  assert.ok(recruitment.includes('FREIGHTMASTER USA'));assert.ok(recruitment.includes('950 Houston Northcutt Blvd, Mount Pleasant, SC 29464'));
  assert.ok(recruitment.includes(locale==='en'?'Upload your documents':'Sube tus documentos'));
@@ -106,4 +106,4 @@ new Function('require','exports','module',apiCode)(name=>name==='@/lib/access'?a
 async function chat(message,locale){return (await (await apiModule.exports.POST(new Request('https://freight.test/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message,locale})}))).json()).message;}
 assert.equal(await chat('Location','en'),'English address');assert.equal(await chat('Ubicación','es'),'Dirección original');assert.equal(await chat('Security','en'),'English security terms');
 delete settings.security_en;assert.match(await chat('Security','en'),/original text/);assert.match(await chat('Security','en'),/Política original/);
-console.log('PASS: bilingual pages and replies, six uploads, untranslated operational data, locale fallback, preference callback/cookie, localized company settings, selector state and scroll-only video.');
+console.log('PASS: bilingual pages and replies, six uploads, untranslated operational data, locale fallback, preference callback/cookie, localized company settings, selector state and lightweight static hero.');
