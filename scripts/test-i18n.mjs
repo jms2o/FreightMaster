@@ -62,6 +62,23 @@ for(const route of ['/control','/control/choferes','/control/itinerarios','/cont
  const html=render(file,'en');assert.ok(html.length>0);
 }
 currentPathname='/control';
+// Public mobile navigation opens/closes the native dialog and retains every destination.
+let menuOpened=0,menuClosed=0,toggleFocused=0,driverOpened=0,refIndex=0;
+const dialogDouble={showModal(){menuOpened++;},close(){menuClosed++;}};
+const toggleDouble={focus(){toggleFocused++;}};
+const headerModule={exports:{}};
+const headerCode=ts.transpileModule(readFileSync(path.join(root,'app/site-header.tsx'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
+const headerReact={...React,useRef:()=>({current:refIndex++===0?dialogDouble:toggleDouble}),useState:()=>[false,()=>{}],useEffect(){}};
+new Function('require','exports','module',headerCode)(name=>name==='react'?headerReact:name==='./language'?{useLanguage:()=>({t:text=>translate(text,'en')}),LanguageSwitcher}:require(name),headerModule.exports,headerModule);
+const headerTree=headerModule.exports.default({onDriverAccess(){driverOpened++;}});
+const publicHeader=headerTree.props.children[0],publicDialog=headerTree.props.children[1];
+const mobileToggle=publicHeader.props.children.find(child=>child?.props?.className==='site-menu-toggle');
+assert.equal(mobileToggle.props['aria-controls'],publicDialog.props.id);assert.equal(publicDialog.props['aria-labelledby'],'site-menu-title');
+mobileToggle.props.onClick();assert.equal(menuOpened,1);
+const mobileNav=publicDialog.props.children.find(child=>child?.type==='nav');
+for(const href of ['#servicios','#experiencia','/trabaja-con-nosotros'])assert.ok(mobileNav.props.children.some(child=>child?.props?.href===href));
+mobileNav.props.children.find(child=>child?.type==='button').props.onClick();assert.equal(driverOpened,1);assert.equal(menuClosed,1);
+publicDialog.props.onClose();assert.equal(toggleFocused,1);
 // Both language choices are available in server-rendered output.
 const selector=renderToStaticMarkup(React.createElement(LanguageProvider,{initialLocale:'en'},React.createElement(LanguageSwitcher)));
 assert.ok(selector.includes('Español'));assert.ok(selector.includes('English'));

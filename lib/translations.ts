@@ -480,5 +480,7 @@ export const ENGLISH:Record<string,string> = {
   "Abrir sección": "Open section",
   "Consulta las 100 solicitudes de cotización más recientes.": "View the 100 most recent quote requests.",
   "Cargando sección del panel": "Loading panel section",
-  "Sección no válida.": "Invalid section."
+  "Sección no válida.": "Invalid section.",
+  "Cotizar": "Quote",
+  "Menú": "Menu"
 };

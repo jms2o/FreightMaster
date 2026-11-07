@@ -105,3 +105,10 @@ Para las respuestas propias de la empresa, entra a `/control` → Información d
 ## Panel por secciones
 
 Después de desplegar, entra con el mismo usuario en `/control/login`. El menú abre páginas independientes de Choferes, Itinerarios, Postulaciones, Cotizaciones, Usuarios y Asistente público. En celular se abre con el botón de menú; también se puede cerrar con Escape. El resumen de `/control` permite entrar directamente a cada módulo. Se conserva la preferencia Español / English. Este cambio solo reorganiza las herramientas: no requiere importar SQL ni configurar variables nuevas.
+
+
+## Ajustes para móviles
+
+La portada usa un encabezado compacto y menú modal hasta 1100 px. Los campos se organizan en una columna en teléfonos, los controles de texto usan un tamaño legible de 16 px y los botones principales tienen áreas táctiles de al menos 44 px. Se contemplan los márgenes seguros de iPhone y pantallas pequeñas en horizontal. El chat se adapta al espacio disponible cuando aparece el teclado; conserva su botón de cierre y el campo para escribir. No se cambia el avance del video mediante scroll ni el acceso administrativo.
+
+Publica la versión nueva de `main` con la configuración existente. No hay cambios de base de datos ni variables nuevas.
